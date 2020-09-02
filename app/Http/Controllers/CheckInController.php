@@ -43,8 +43,8 @@ class CheckInController extends Controller
         $group    = $request->insert_group;
         $class    = $request->insert_class;
         $shift    = $request->insert_shift;
-        if(!isset($account) || !isset($name) || !isset($password) || !isset($level) || !isset($group) || !isset($class) || !isset($shift)) {
-            return response()->json(['code' => 1, 'msg' => '栏位不可为空'], 400);
+        if(!isset($account) || !isset($password) || !isset($level) || !isset($group) || !isset($class) || !isset($shift)) {
+            return response()->json(['code' => 1, 'msg' => '欄位不可為空'], 400);
         }
         $now      = date("Y-m-d H:i:s");
         $pw       = password_hash($password, PASSWORD_DEFAULT);
@@ -62,11 +62,11 @@ class CheckInController extends Controller
         ];
         $check = account::CheckAccount($account);
         if (!$check->isEmpty()) {
-            return response()->json(['code' => 1, 'msg' => '帐号重复'], 400);
+            return response()->json(['code' => 1, 'msg' => '帳號重複'], 400);
         }
         $result = account::create($data);
         if ($result) {
-            return response()->json(['code' => 0, 'msg' => '', 'data' => '创建成功'], 200);
+            return response()->json(['code' => 0, 'msg' => '', 'data' => '創建成功'], 200);
         }
     }
 
@@ -78,15 +78,15 @@ class CheckInController extends Controller
         $allgroup    = [];
 
         if ($getAccount->isEmpty()) {
-            return response()->json(['code' => 1, 'msg' => '无此帐号', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '無此帳號', 'data' => ''], 400);
         }
         $account = $getAccount->toArray()[0];
         $check   = password_verify($password, $account['password']);
         if (!$check) {
-            return response()->json(['code' => 1, 'msg' => '密码错误', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '密碼錯誤', 'data' => ''], 400);
         }
         if ($account['status'] !== '1') {
-            return response()->json(['code' => 1, 'msg' => '帐号已被锁定', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '帳號已被鎖定', 'data' => ''], 400);
         }
         $res = group_setting::GetGroupById($account['group']);
         if(!$res->isEmpty()) {
@@ -98,56 +98,28 @@ class CheckInController extends Controller
 
     public function changePassword(Request $request)
     {
-        $arr = [
-                    "Alex、Jasper",
-                    "Max、Wendy",
-                    "Paul、Chelsea",
-                    "Andy、Ts",
-                    "Kitty、Jason",
-                    "Chris、Bob",
-                    "Catch、Raven",
-                ];
-        for ($i=1; $i<=1; $i++) {
-            foreach ($arr as $key => $val) {
-                if($key == 5) {
-                    
-                }
-                $x = $key * $i;
-                $res = on_duty::create(['date' => date("Y-m-d",strtotime("+ {$x} Days")), 'member' => $val]);
-            }
-        }
-        die;
-
-
-        for ($i=0; $i<=7; $i++) {
-            $x = $i % 7;
-            $res = on_duty::create(['date' => date("Y-m-d",strtotime("+ {$i} Days")), 'member' => $arr[$x]]);
-        }
-        die;
-
-
         $opw  = $request->old_password;
         $npw  = $request->new_password;
         $npw2 = $request->new_password2;
         if(empty($opw) || empty($npw) || empty($npw2)) {
-            return response()->json(['code' => 1, 'msg' => '资料不可为空', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '資料不可為空', 'data' => ''], 400);
         } else if ($npw != $npw2) {
-            return response()->json(['code' => 1, 'msg' => '新密码输入不相同', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '新密碼輸入不相同', 'data' => ''], 400);
         }
 
         $res = account::where('accountid', $request->accountid)->get();
         if(!$res->isEmpty()) {
             $check = password_verify($opw, $res->first()->password);
             if (empty($check)) {
-                return response()->json(['code' => 1, 'msg' => '密码错误', 'data' => ''], 400);
+                return response()->json(['code' => 1, 'msg' => '密碼錯誤', 'data' => ''], 400);
             }
 
             $check2 = account::where('accountid', $request->accountid)->update(['password' => password_hash($npw, PASSWORD_DEFAULT)]);
             if (!empty($check2)) {
-                return response()->json(['code' => 0, 'msg' => '', 'data' => '更改密码成功'], 200);
+                return response()->json(['code' => 0, 'msg' => '', 'data' => '更改密碼成功'], 200);
             }
         }
-        return response()->json(['code' => 1, 'msg' => '更改密码错误', 'data' => ''], 400);
+        return response()->json(['code' => 1, 'msg' => '更改密碼錯誤', 'data' => ''], 400);
     }
 
     public function todayCheck(Request $request)
@@ -621,7 +593,7 @@ class CheckInController extends Controller
             }
         }
         DB::rollback();
-        return response()->json(['code' => 1, 'msg' => '新增失败'], 400);
+        return response()->json(['code' => 1, 'msg' => '新增失敗'], 400);
     }
 
     public function getList(Request $request)
@@ -657,7 +629,7 @@ class CheckInController extends Controller
         $status = $request->status;
         $update = do_list::ChangeStatus($id, $status);
         if (!$update)
-            return response()->json(['code' => 1, 'msg' => '修改失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '修改失敗', 'data' => ''], 400);
         return response()->json(['code' => 0, 'msg' => '', 'data' => '修改成功'], 200);
     }
 
@@ -681,11 +653,11 @@ class CheckInController extends Controller
                 $resAudit = do_list_audit::create($data);
                 if (!empty($resAudit->id)) {
                     DB::commit();
-                    return response()->json(['code' => 0, 'msg' => '', 'data' => '删除成功'], 200);
+                    return response()->json(['code' => 0, 'msg' => '', 'data' => '刪除成功'], 200);
                 }
             }
             DB::rollback();
-            return response()->json(['code' => 1, 'msg' => '删除失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '刪除失敗', 'data' => ''], 400);
         }
     }
 
@@ -724,13 +696,13 @@ class CheckInController extends Controller
                 $res2 = shift_audit::create($data);
                 if (!empty($res2->id)) {
                     DB::commit();
-                    return response()->json(['code' => 0, 'msg' => '', 'data' => '删除成功'], 200);
+                    return response()->json(['code' => 0, 'msg' => '', 'data' => '刪除成功'], 200);
                 }
             }
             DB::rollback();
-            return response()->json(['code' => 1, 'msg' => '删除失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '刪除失敗', 'data' => ''], 400);
         } else {
-            return response()->json(['code' => 1, 'msg' => '该班别还有员工', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '該班別還有員工', 'data' => ''], 400);
         }
     }
 
@@ -761,20 +733,20 @@ class CheckInController extends Controller
                 }
             }
             DB::rollback();
-            return response()->json(['code' => 1, 'msg' => '修改失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '修改失敗', 'data' => ''], 400);
         } else {
-            return response()->json(['code' => 1, 'msg' => '没有此班别', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '沒有此班別', 'data' => ''], 400);
         }
     }
 
     public function addShiftSetting(Request $request)
     {
         if (empty($request->title)) {
-            return response()->json(['code' => 1, 'msg' => '请输入班别', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '請輸入班別', 'data' => ''], 400);
         } else if (empty($request->time[0])) {
-            return response()->json(['code' => 1, 'msg' => '请输入开始时间', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '請輸入開始時間', 'data' => ''], 400);
         } else if (empty($request->time[1])) {
-            return response()->json(['code' => 1, 'msg' => '请输入结束时间', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '請輸入結束時間', 'data' => ''], 400);
         } else {
             DB::begintransaction();
             $data = [
@@ -799,7 +771,7 @@ class CheckInController extends Controller
                 }
             }
             DB::rollback();
-            return response()->json(['code' => 1, 'msg' => '新增失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '新增失敗', 'data' => ''], 400);
         }
     }
 
@@ -829,7 +801,7 @@ class CheckInController extends Controller
             'shift'    => $request->editShift
         ];
         if(!isset($request->editLevel) || !isset($request->editGroup) || !isset($request->editClass) || !isset($request->editShift)) {
-            return response()->json(['code' => 1, 'msg' => '栏位不可为空'], 400);
+            return response()->json(['code' => 1, 'msg' => '欄位不可為空'], 400);
         }
         $update = account::where('accountid', $request->id)->update($editData);
         return response()->json(['code' => 0, 'msg' => '', 'data' => '更改完成'], 200);
@@ -838,9 +810,9 @@ class CheckInController extends Controller
     public function editAccountCheckin(Request $request)
     {
         if(!empty($request->status)) {
-            return response()->json(['code' => 1, 'msg' => '无法帮员工打卡', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '無法幫員工打卡', 'data' => ''], 400);
         } else if(empty($request->type) || !in_array($request->type, ['1', '2'])) {
-            return response()->json(['code' => 1, 'msg' => '更改失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '更改失敗', 'data' => ''], 400);
         }
 
         $res = record::where('accountid', $request->id)
@@ -850,7 +822,7 @@ class CheckInController extends Controller
         if (!empty($res)) {
             return response()->json(['code' => 0, 'msg' => '', 'data' => '更改成功'], 200);
         }
-        return response()->json(['code' => 1, 'msg' => '更改失败', 'data' => ''], 400);
+        return response()->json(['code' => 1, 'msg' => '更改失敗', 'data' => ''], 400);
     }
 
     public function delAccount(Request $request)
@@ -858,14 +830,14 @@ class CheckInController extends Controller
         $id     = $request->id;
         $update = account::where('accountid', $id)->update(['status' => '0']);
         if(!$update)
-            return response()->json(['code' => 1, 'msg' => '删除失败', 'data' => ''], 400);
-        return response()->json(['code' => 0, 'msg' => '', 'data' => '删除成功'], 200);
+            return response()->json(['code' => 1, 'msg' => '刪除失敗', 'data' => ''], 400);
+        return response()->json(['code' => 0, 'msg' => '', 'data' => '刪除成功'], 200);
     }
 
     public function editRemark(Request $request)
     {
         if(empty($request->id) || empty($request->type) || empty($request->date)) {
-            return response()->json(['code' => 1, 'msg' => '更新失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '更新失敗', 'data' => ''], 400);
         }
         $check = 'insert';
         $data = [
@@ -897,7 +869,7 @@ class CheckInController extends Controller
             }
         }
         DB::rollback();
-        return response()->json(['code' => 1, 'msg' => '更新失败', 'data' => ''], 400);
+        return response()->json(['code' => 1, 'msg' => '更新失敗', 'data' => ''], 400);
     }
 
     public function export(Request $request)
@@ -909,7 +881,7 @@ class CheckInController extends Controller
             $account[$val['accountid']]['accountcode'] = $val['accountcode'];
             $account[$val['accountid']]['nickname'] = $val['nickname'];
         }
-        $data = [['员工编号','帐号', '日期', '上班', '下班', '是否迟到', '迟到时数', '早退时数', '实际工时', '上班备注', '下班备注']];
+        $data = [['員工編號','帳號', '日期', '上班', '下班', '是否遲到', '遲到時數', '早退時數', '實際工時', '上班備註', '下班備註']];
         $this->getRecord($request);
         foreach($this->record as $key => $value) {
             foreach($value as $k => $v) {
@@ -942,7 +914,7 @@ class CheckInController extends Controller
         }
         $img = empty($avatarId) ? '' : $path."?".date("YmdHi");
         if (empty($accountAvatar) || empty($avatarId))
-            return response()->json(['code' => 1, 'msg' => '取得头贴失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '取得頭貼失敗', 'data' => ''], 400);
         return response()->json(['code' => 0, 'msg' => '', 'data' => $img], 200);
 
     }
@@ -954,7 +926,7 @@ class CheckInController extends Controller
         if ($id) {
             return response()->json(['code' => 0, 'msg' => '', 'data' => '更改成功'], 200);
         } else {
-            return response()->json(['code' => 0, 'msg' => '', 'data' => '更改失败'], 400);
+            return response()->json(['code' => 0, 'msg' => '', 'data' => '更改失敗'], 400);
         }
     }
 
@@ -963,33 +935,40 @@ class CheckInController extends Controller
         $data = [];
         $return = [];
         $res = group_setting::where('status', '1')
+                            ->where('level', '0')
                             ->get();
         if(!$res->isEmpty()) {
             foreach ($res as $key => $val) {
-                if($val['level'] == '0') {
-                    $data[$val['id']] = [
-                                            'id'       => $val['id'],
-                                            'title'    => $val['title'],
-                                            'class'    => [],
-                                            'class_ch' => [],
-                                        ];
-                }
-                if($val['level'] == '1' && !empty($val['parent'])) {
+                $data[$val['id']] = [
+                                        'id'       => $val['id'],
+                                        'title'    => $val['title'],
+                                        'class'    => [],
+                                        'class_ch' => [],
+                                    ];
+            }
+        }
+
+        $res = group_setting::where('status', '1')
+                            ->where('level', '1')
+                            ->get();
+        if(!$res->isEmpty()) {
+            foreach ($res as $key => $val) {
+                if(!empty($val['parent'])) {
                     // $data[$val['parent']]['class'][]    = $val;
                     $data[$val['parent']]['class'][]    = (Int)$val['id'];
                     $data[$val['parent']]['class_ch'][] = $val['title'];
                 }
             }
+        }
 
-            if(count($data) > 0) {
-                foreach ($data as $key => $val) {
-                    $return[] = [
-                                    'id'       => $val['id'],
-                                    'title'    => $val['title'],
-                                    'class'    => $val['class'],
-                                    'class_ch' => implode('/', $val['class_ch']),
-                                ];
-                }
+        if(count($data) > 0) {
+            foreach ($data as $key => $val) {
+                $return[] = [
+                                'id'       => $val['id'],
+                                'title'    => $val['title'],
+                                'class'    => $val['class'],
+                                'class_ch' => implode('/', $val['class_ch']),
+                            ];
             }
         }
         return response()->json(['code' => 0, 'msg' => '', 'data' => $return], 200);
@@ -1021,6 +1000,29 @@ class CheckInController extends Controller
         return response()->json(['code' => 0, 'msg' => '', 'data' => $data], 200);
     }
 
+    public function insertGroup(Request $request)
+    {
+        $title  = $request->group_title;
+        DB::begintransaction();
+        $res = group_setting::create(['title' => $title, 'parent' => '0', 'level' => '0', 'status' => '1']);
+        if(!empty($res->id)) {
+            $data = [
+                'mapping'    => $res->id,
+                'method'     => 'insert',
+                'para'       => json_encode(['title' => $title]),
+                'updateuser' => $request->accountid,
+                'date'       => date("Y-m-d H:i:s")
+            ];
+            $res2 = group_audit::create($data);
+            if (!empty($res2->id)) {
+                DB::commit();
+                return response()->json(['code' => 0, 'msg' => '', 'data' => '新增部門成功'], 200);
+            }
+        }
+        DB::rollback();
+        return response()->json(['code' => 1, 'msg' => '新增部門失敗', 'data' => ''], 400);
+    }
+
     public function updateGroup(Request $request)
     {
         $id     = $request->group_id;
@@ -1038,11 +1040,11 @@ class CheckInController extends Controller
             $res2 = group_audit::create($data);
             if (!empty($res2->id)) {
                 DB::commit();
-                return response()->json(['code' => 0, 'msg' => '', 'data' => '更新部门成功'], 200);
+                return response()->json(['code' => 0, 'msg' => '', 'data' => '更新部門成功'], 200);
             }
         }
         DB::rollback();
-        return response()->json(['code' => 1, 'msg' => '更新部门失败', 'data' => ''], 400);
+        return response()->json(['code' => 1, 'msg' => '更新部門失敗', 'data' => ''], 400);
     }
 
     public function insertClass(Request $request)
@@ -1066,18 +1068,18 @@ class CheckInController extends Controller
             $res2 = group_audit::create($data2);
             if (!empty($res2->id)) {
                 DB::commit();
-                return response()->json(['code' => 0, 'msg' => '', 'data' => '新增组别成功'], 200);
+                return response()->json(['code' => 0, 'msg' => '', 'data' => '新增組別成功'], 200);
             }
         }
         DB::rollback();
-        return response()->json(['code' => 1, 'msg' => '新增组别失败', 'data' => ''], 400);
+        return response()->json(['code' => 1, 'msg' => '新增組別失敗', 'data' => ''], 400);
     }
 
     public function updateClass(Request $request)
     {
-        $id     = $request->insert_id;
-        $title  = $request->insert_title;
-        $parent = $request->insert_group;
+        $id     = $request->class_id;
+        $title  = $request->class_title;
+        $parent = $request->class_group;
         DB::begintransaction();
         $res = group_setting::where('id', $id)->where('level', '1')->update(['title' => $title, 'parent' => $parent]);
         if(!empty($res)) {
@@ -1091,11 +1093,11 @@ class CheckInController extends Controller
             $res2 = group_audit::create($data);
             if (!empty($res2->id)) {
                 DB::commit();
-                return response()->json(['code' => 0, 'msg' => '', 'data' => '更新组别成功'], 200);
+                return response()->json(['code' => 0, 'msg' => '', 'data' => '更新組別成功'], 200);
             }
         }
         DB::rollback();
-        return response()->json(['code' => 1, 'msg' => '更新组别失败', 'data' => ''], 400);
+        return response()->json(['code' => 1, 'msg' => '更新組別失敗', 'data' => ''], 400);
     }
 
     public function delGroup(Request $request)
@@ -1116,13 +1118,13 @@ class CheckInController extends Controller
                 $res2 = group_audit::create($data);
                 if (!empty($res2->id)) {
                     DB::commit();
-                    return response()->json(['code' => 0, 'msg' => '', 'data' => '删除部门成功'], 200);
+                    return response()->json(['code' => 0, 'msg' => '', 'data' => '刪除部門成功'], 200);
                 }
             }
             DB::rollback();
-            return response()->json(['code' => 1, 'msg' => '删除部门失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '刪除部門失敗', 'data' => ''], 400);
         } else {
-            return response()->json(['code' => 1, 'msg' => '此部门还有人员，无法删除', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '此部門還有人員，無法刪除', 'data' => ''], 400);
         }
     }
 
@@ -1144,13 +1146,13 @@ class CheckInController extends Controller
                 $res2 = group_audit::create($data);
                 if (!empty($res2->id)) {
                     DB::commit();
-                    return response()->json(['code' => 0, 'msg' => '', 'data' => '删除组别成功'], 200);
+                    return response()->json(['code' => 0, 'msg' => '', 'data' => '刪除組別成功'], 200);
                 }
             }
             DB::rollback();
-            return response()->json(['code' => 1, 'msg' => '删除组别失败', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '刪除組別失敗', 'data' => ''], 400);
         } else {
-            return response()->json(['code' => 1, 'msg' => '此组别还有人员，无法删除', 'data' => ''], 400);
+            return response()->json(['code' => 1, 'msg' => '此組別還有人員，無法刪除', 'data' => ''], 400);
         }
     }
 
@@ -1171,6 +1173,7 @@ class CheckInController extends Controller
 
     public function getAnn(Request $request)
     {
+        $data   = [];
         $group  = $request->group;
         $groups = group_setting::select('id', 'title')->where('status', '1')->pluck('title', 'id')->toArray();
         $result = announcement::GetGroupAnn($group);
@@ -1202,23 +1205,20 @@ class CheckInController extends Controller
                     $data['group'][$val['id']] = $val['title'];
                     $data['filter_group'][] = [
                                                 'text'  => $val['title'],
-                                                'value' => $val['title'],
+                                                'value' => (String)$val['id'],
                     ];
                 } else {
                     $data['class'][$val['parent']][$val['id']] = $val['title'];
                     $data['class_group'][$val['id']] = $val['title'];
                     $data['filter_class'][] = [
                                                 'text'  => $val['title'],
-                                                'value' => $val['title'],
+                                                'value' => (Int)$val['id'],
                     ];
                 }
             }
         }
         return response()->json(['code' => 0, 'msg' => '', 'data' => $data], 200);
     }
-
-
-
 
     // 储存图片
     public function build($pic, $path)
@@ -1236,7 +1236,6 @@ class CheckInController extends Controller
             'level'     => $account['level'],
             'group'     => $account['group'],
             'groupName' => $account['groupName'],
-
             'shift'     => $account['shift'],
             'iat'       => time(),                    // Time when JWT was issued.
             'exp'       => time() + 6 * 60 * 60        // Expiration time

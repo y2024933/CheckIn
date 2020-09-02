@@ -1,11 +1,11 @@
 <template>
   <center>
     <el-main class="row-bg">
-      <span style="text-align: right; float: left; margin-left: 65px; font-size: 18px;">状态
-        <el-select v-model="status" placeholder="请选择" style="width: 150px;margin-top: 30px; margin-left: 15px; border-color: #b6b6b6;">
-          <el-option key="0" label="全部显示" value="0"></el-option>
+      <span style="text-align: right; float: left; margin-left: 65px; font-size: 18px;">狀態
+        <el-select v-model="status" placeholder="請選擇" style="width: 150px;margin-top: 30px; margin-left: 15px; border-color: #b6b6b6;">
+          <el-option key="0" label="全部顯示" value="0"></el-option>
           <el-option key="1" label="有效" value="1" ></el-option>
-          <el-option key="2" label="已删除" value="2"></el-option>
+          <el-option key="2" label="已刪除" value="2"></el-option>
         </el-select>
       </span>
       <el-button size="mini" style="margin-top: 30px; float: right; display: inline; margin-right: 65px; padding: 0px; border: 0px" @click="dialogTableVisible2 = true">
@@ -18,21 +18,21 @@
         size="mini"
         style="width: 82vh; padding: 15px 30px 30px 30px; font-size: 18px; color: #b6b6b6;">
         <el-table-column
-          label="班别"
+          label="班別"
           width="160">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.title }}</span>
           </template>
         </el-table-column>
         <el-table-column
-          label="上班时间"
+          label="上班時間"
           width="160">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.starttime }}</span>
           </template>
         </el-table-column>
         <el-table-column
-          label="下班时间"
+          label="下班時間"
           width="160">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.endtime }}</span>
@@ -51,7 +51,7 @@
               size="mini"
               type="warning"
               @click="handleEdit(scope.$index, scope.row), dialogTableVisible=true"
-              style="margin-right: 18px;">编辑</el-button>
+              style="margin-right: 18px;">編輯</el-button>
             <el-button
               size="mini"
               type="warning"
@@ -59,31 +59,31 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-dialog title="编辑" :visible.sync="dialogTableVisible" center @close="resetForm">
+      <el-dialog title="編輯" :visible.sync="dialogTableVisible" center @close="resetForm">
         <center>
           <el-form ref="form" :model="form" label-width="" label-position="left">
             <el-form-item label="">
-              <span>班别</span>
+              <span>班別</span>
               <el-input v-model="form.title" style="width: 345px;"></el-input>
             </el-form-item>
             <el-form-item label="">
-              <span>时间</span>
+              <span>時間</span>
               <el-time-picker
                 v-model="form.time[0]"
                 value-format="HH:mm:ss"
-                placeholder="开始时间"
+                placeholder="開始時間"
                 style="width: 180p;">
               </el-time-picker>
               <div style="font-size: 17px; color: #b6b6b6; display: inline;">至</div>
               <el-time-picker
                 v-model="form.time[1]"
                 value-format="HH:mm:ss"
-                placeholder="结束时间">
+                placeholder="結束時間">
               </el-time-picker>
             </el-form-item>
             <el-form-item label="">
               <span>跨天</span>
-              <el-select v-model="form.crossday" placeholder="请选择" style="width: 344px;">
+              <el-select v-model="form.crossday" placeholder="請選擇" style="width: 344px;">
                 <el-option key="0" label="否" value="0"></el-option>
                 <el-option key="1" label="是" value="1" ></el-option>
               </el-select>
@@ -96,26 +96,26 @@
         <center>
           <el-form ref="insertForm" :model="insertForm" label-width="" label-position="left">
             <el-form-item label="">
-              <span>班别</span>
+              <span>班別</span>
               <el-input v-model="insertForm.title" style="width: 345px;"></el-input>
             </el-form-item>
             <el-form-item label="">
-              <span>时间</span>
+              <span>時間</span>
               <el-time-picker
                 v-model="insertForm.time[0]"
                 value-format="HH:mm:ss"
-                placeholder="开始时间">
+                placeholder="開始時間">
               </el-time-picker>
               <div style="font-size: 17px; color: #b6b6b6; display: inline;">至</div>
               <el-time-picker
                 v-model="insertForm.time[1]"
                 value-format="HH:mm:ss"
-                placeholder="结束时间">
+                placeholder="結束時間">
               </el-time-picker>
             </el-form-item>
             <el-form-item label="">
               <span>跨天</span>
-              <el-select v-model="form.crossday" placeholder="请选择" style="width: 344px;">
+              <el-select v-model="form.crossday" placeholder="請選擇" style="width: 344px;">
                 <el-option key="0" label="否" value="0"></el-option>
                 <el-option key="1" label="是" value="1" ></el-option>
               </el-select>
@@ -170,8 +170,8 @@
         this.form.crossday = row.crossday
       },
       handleDel(index, row) {
-        this.$confirm(`是否删除 ${row.title} ?`, '提示', {
-          confirmButtonText: '确定',
+        this.$confirm(`是否刪除 ${row.title} ?`, '提示', {
+          confirmButtonText: '確定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {

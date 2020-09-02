@@ -9,13 +9,13 @@
             text-color="#0168b7"
             active-text-color="#0168b7">
         <el-menu-item style="background-color: transparent;" index="/checkin" route="/checkin">打卡</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/checklog" route="/checklog">出缺勤纪录</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/todo" route="/todo">代办事项</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/report" route="/report" v-if="show">人事报表</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/modifyAccount" route="/modifyAccount" v-if="show">人员管理</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/groupSetting" route="/groupSetting" v-if="show">部门设定</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/checkInSetting" route="/checkInSetting" v-if="setting">打卡设定</el-menu-item>
-        <el-menu-item style="background-color: transparent;" index="/todayCheckIn" route="/todayCheckIn" v-if="show">签到状态</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/checklog" route="/checklog">出缺勤紀錄</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/todo" route="/todo">代辦事項</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/report" route="/report" v-if="show">人事報表</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/modifyAccount" route="/modifyAccount" v-if="show">人員管理</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/groupSetting" route="/groupSetting" v-if="show">部門設定</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/checkInSetting" route="/checkInSetting" v-if="setting">打卡設定</el-menu-item>
+        <el-menu-item style="background-color: transparent;" index="/todayCheckIn" route="/todayCheckIn" v-if="show">簽到狀態</el-menu-item>
         <span> {{ getAccount }} </span>
         <el-avatar v-if="avatar === ''" class="avatar" style="word-break: break-all;"> {{ this.$store.state.account }} </el-avatar>
         <el-avatar v-else class="avatar" :size="50" :src="avatar" @error="errorHandler">
@@ -26,7 +26,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="logout">登出</el-dropdown-item>
               <el-dropdown-item command="changePassword">更改密碼</el-dropdown-item>
-              <el-dropdown-item command="changeAvatar">更换头贴</el-dropdown-item>
+              <el-dropdown-item command="changeAvatar">更換頭貼</el-dropdown-item>
             </el-dropdown-menu>
           </i>
         </el-dropdown>
@@ -36,33 +36,33 @@
 
     <el-dialog title="更改密码" :visible.sync="dialogFormVisible" @closed="resetForm">
       <el-form :model="form" label-width="140px">
-        <el-form-item label="请输入旧密码">
+        <el-form-item label="請輸入舊密碼">
           <el-input v-model="form.old_password" size="mini" show-password></el-input>
         </el-form-item>
-        <el-form-item label="请输入新密码">
+        <el-form-item label="請輸入新密碼">
           <el-input v-model="form.new_password" size="mini" show-password></el-input>
         </el-form-item>
-        <el-form-item label="再次确认新密码">
+        <el-form-item label="再次確認新密碼">
           <el-input v-model="form.new_password2" size="mini" show-password></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <!-- <el-button @click="dialogFormVisible = false">取 消</el-button> -->
-        <el-button type="primary" @click="changePassword" style="border-radius: 10px; width: 100px;">确 定</el-button>
+        <el-button type="primary" @click="changePassword" style="border-radius: 10px; width: 100px;">確 定</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="更换头贴" :visible.sync="avatarDialog" @closed="resetForm">
+    <el-dialog title="更換頭貼" :visible.sync="avatarDialog" @closed="resetForm">
       <div style="text-align-last: center;">
         <el-avatar :size="100" :src="upload" style="margin-bottom: 10px;"></el-avatar><br />
         <label class="fileinput">
-          <i class="el-icon-picture"></i> 上传图片
+          <i class="el-icon-picture"></i> 上傳圖片
           <input id="fileimg" type="file" @change="getbas64" accept="image/*" style="display: none">
         </label>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="changeAvatar" style="border-radius: 10px; width: 100px; margin-top: 50px; font-size: 16px; font-weight: bold">
-          确 定
+          確 定
         </el-button>
       </div>
     </el-dialog>
@@ -75,7 +75,7 @@ let timeoutID = ''
   export default {
     data() {
       return {
-				activeIndex: null,
+        activeIndex: null,
         disable: true,
         code: '',
         show: false,
@@ -111,7 +111,7 @@ let timeoutID = ''
     methods: {
       handleSelect(s) {
         this.$router.push( { path: s} ).catch(err => {})
-			},
+      },
       handleCommand(s) {
         if(s === "logout") {
           this.logout()
@@ -192,7 +192,7 @@ let timeoutID = ''
             fr.readAsDataURL(input.files[0])
           } else {
             this.$message({
-              message: `档案不能超过 ${this.size}MB`,
+              message: `檔案不能超過 ${this.size}MB`,
               type: 'warning',
               showClose: true
             })
@@ -221,11 +221,11 @@ let timeoutID = ''
       //   if (val === 1 || val === 2){
       //     this.show = true
       //   }
-			// },
-			$route (to, from) {
-				console.log(to.path, 2);
-    	  this.activeIndex = to.path;
-    	}
+      // },
+      $route (to, from) {
+        console.log(to.path, 2);
+        this.activeIndex = to.path;
+      }
     }
   }
 </script>
@@ -266,28 +266,28 @@ let timeoutID = ''
 
   /deep/ .el-dialog {
     width: 530px;
-	  border-radius: 15px;
+    border-radius: 15px;
 }
 
   /deep/ .el-dialog__header {
-  	background-color: #00b8ee;
-  	border-radius: 15px 15px 0 0;
-  	margin-bottom: 0px;
+    background-color: #00b8ee;
+    border-radius: 15px 15px 0 0;
+    margin-bottom: 0px;
     text-align: center;
   }
 
   /deep/ .el-dialog__header .el-dialog__title {
-  	color: #fff;
+    color: #fff;
     font-size: 20px;
     font-weight: bold;
   }
 
   /deep/ .el-dialog__body {
-  	padding: 30px 20px 0 20px
+    padding: 30px 20px 0 20px
   }
 
   /deep/ .el-icon-close:before {
-  	color: #fff;
+    color: #fff;
   }
 
   /deep/ .el-form-item__label {

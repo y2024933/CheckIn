@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- <button type="button" class="el-btn-primary"v-on:click="download">导出PDF</button> -->
-		<div class="wrapper" id="resumeId">
+		<div class="wrapper" id="resumeId" v-loading="loading" element-loading-background="transparent">
 			<div class="box" v-for="(data, account) in todoList" :key="account">
 				<div style="display: block; font-weight: bold; font-size: 32px; margin-left: 5px;">
 					<el-avatar v-if="data.avatar === ''" class="avatar" style="word-break: break-all;"> {{ account }} </el-avatar>
@@ -12,7 +12,7 @@
 					<img v-if="$store.state.account === account" src="images/brands.svg" style="width: 18px; margin-left: 5px;" class="self"></img>
 				</div>
 				<div style="display: inline-flex;" v-if="$store.state.account === account">
-					<el-input v-model="addInput" placeholder="新增事项" size="mini" @keyup.enter.native="add" style="margin: 10px 0 5px 0;"></el-input>
+					<el-input v-model="addInput" placeholder="新增事項" size="mini" @keyup.enter.native="add" style="margin: 10px 0 5px 0;"></el-input>
 					<el-button slot="append" icon="el-icon-edit" size="mini" @click="add" style="margin: 10px 0 5px 10px;"></el-button>
 				</div>
 				<hr/>
@@ -30,6 +30,7 @@ export default {
 	data() {
 		return {
 			addInput: '',
+			loading: true,
 			todoList: {}
 		}
 	},
@@ -41,11 +42,12 @@ export default {
 			axios.get("/api/getList")
 				.then(res => {
 					this.todoList = res.data.data
+					this.loading = false
 				})
 		},
 		change(id, status, account) {
 			if (account !== this.$store.state.account) {
-				this.$message.error('无法更改他人状态')
+				this.$message.error('無法更改他人狀態')
 				setTimeout(() => {
 					this.$set(this.todoList[account]['list'][id], 'status', status === '1' ? '2' : '1')
 				}, 0);
@@ -60,7 +62,7 @@ export default {
 		},
 		add() {
 			if (this.addInput === '') {
-				this.$message.error('请输入新增事项')
+				this.$message.error('請輸入新增事項')
 				return false
 			}
 			axios.post("/api/writeList", { content: this.addInput })
@@ -73,11 +75,11 @@ export default {
 		},
 		del(id, account) {
 			if (account !== this.$store.state.account) {
-				this.$message.error('无法删除他人事项')
+				this.$message.error('無法刪除他人事項')
 				return false
 			}
-			this.$confirm('确定要删除纪录吗？', {
-				confirmButtonText: '确定',
+			this.$confirm('確定要刪除紀錄嗎？', {
+				confirmButtonText: '確定',
 				cancelButtonText: '取消',
 				type: 'warning'
 			}).then(() => {
@@ -88,7 +90,7 @@ export default {
 					})
 					.catch((err) => { this.$message.error(err.response.data.msg) })
 			}).catch(() => {
-				this.$message({ type: 'info', message: '已取消删除' });
+				this.$message({ type: 'info', message: '已取消刪除' });
 			});
 		},
 		download() {
@@ -161,7 +163,7 @@ export default {
 }
 
 ::-webkit-scrollbar {
-	width: 16px;
+	width: 12px;
 	height: 16px;
 	background-color: #F5F5F5;
 }
@@ -181,6 +183,6 @@ export default {
 ::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-	background-color: #0073cd66;
+	background-color: #0083ff5c;
 }
 </style>

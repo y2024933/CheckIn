@@ -5,7 +5,7 @@
        <el-date-picker
          v-model="date"
          type="date"
-         placeholder="选择日期"
+         placeholder="選擇日期"
          value-format="yyyy-MM-dd"
          @change="getMemberByDate">
        </el-date-picker>
@@ -18,21 +18,21 @@
        size="mini"
        style="width: 83vh; margin: 30px 0; padding: 30px; font-size: 18px; border-radius: 12px; font-weight: bold; color: #bfbfbf;">
        <el-table-column
-         label="帐号"
+         label="帳號"
          width="130">
          <template slot-scope="scope">
            <span style="margin-left: 5px">{{ scope.row.acc }}</span>
          </template>
        </el-table-column>
        <el-table-column
-         label="签到"
+         label="簽到"
          width="60">
          <template slot-scope="scope">
            <el-checkbox style="padding-left: 10px;" v-model="scope.row.checkin" @change="send(scope.$index, scope.row.id, scope.row.acc, scope.row.checkin, '1')"></el-checkbox>
          </template>
         </el-table-column>
         <el-table-column
-          label="签到备注"
+          label="簽到備註"
           width="220"
           align="center">
           <template slot-scope="scope">
@@ -43,14 +43,14 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="签退"
+          label="簽退"
           width="60">
           <template slot-scope="scope">
            <el-checkbox style="padding-left: 10px;" v-model="scope.row.checkout" @change="send(scope.$index, scope.row.id, scope.row.acc, scope.row.checkout, '2')"></el-checkbox>
          </template>
         </el-table-column>
         <el-table-column
-           label="签退备注"
+           label="簽退備註"
            width="220"
            align="center">
           <template slot-scope="scope" style="display: inline-flex;">
@@ -95,8 +95,8 @@
       },
       send(key, id, acc, checkin, type) {
         this.type = type
-        this.$confirm(`是否更改 【${acc}】 ${this.date} 签到状态?`, '提示', {
-          confirmButtonText: '确定',
+        this.$confirm(`是否更改 【${acc}】 ${this.date} 簽到狀態?`, '提示', {
+          confirmButtonText: '確定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
@@ -126,9 +126,9 @@
         })
       },
       edit_remark(id, remark, type, acc) {
-        let msg = (type=='1') ? '签到' : '签退'
-        this.$confirm(`是否更改 【${acc}】 ${this.date} ${msg}备注?`, '提示', {
-          confirmButtonText: '确定',
+        let msg = (type=='1') ? '簽到' : '簽退'
+        this.$confirm(`是否更改 【${acc}】 ${this.date} ${msg}備註?`, '提示', {
+          confirmButtonText: '確定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {

@@ -16,11 +16,10 @@
 		<div class="today">
 			<div slot="header" class="clearfix">
 				<span v-if="$store.state.level === 2" class="department">公司</span>
-				<span v-else class="department">{{ $store.state.groupName }}部门</span>
-				<div class="check" @click="dialogVisible = !dialogVisible">尚未签到名单</div>
-				<div class="check" style="margin-top: 10px;" @click="dialogVisible2 = !dialogVisible2">值日生名单</div>
+				<span v-else class="department">{{ $store.state.groupName }}部門</span>
+				<div class="check" @click="dialogVisible = !dialogVisible">尚未簽到名單</div>
 			</div>
-			<el-dialog custom-class="check" title="今日尚未签到名单" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
+			<el-dialog custom-class="check" title="今日尚未簽到名單" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
 				<div v-for="(user, id) in noCheck" :key="id" style="margin-top: 15px; display:flex; margin-left: 30%;">
 					<el-avatar v-if="user.avatar == ''" class="avatar" :size="45"> {{ user.account }} </el-avatar>
 					<el-avatar v-else class="avatar" :size="45" :src="user.avatar"></el-avatar>
@@ -32,22 +31,11 @@
 				<img v-if="checkType === '1'" style="width: 110px; height: 160px;" src="images/checkin.jpg" />
 				<img v-else style="width: 170px; height: 170px;" src="images/checkout.jpg" /><br/>
 				<el-button round size="medium" style="margin: 10px 30px 10px 0; width: 30%;" @click="confirmVisible = false">取消</el-button>
-				<el-button round size="medium" type="primary" style="width: 30%;" @click="send">确定</el-button>
-			</el-dialog>
-			<el-dialog custom-class="check" title="值日生名单" :visible.sync="dialogVisible2" width="30%">
-				<div style="margin-left: 38%; font-weight: bold; font-size: 20px; text-align: left">
-					<div>一  Catch、Raven</div>
-					<div>二  Alex、Jasper</div>
-					<div>三  Max、Wendy</div>
-					<div>四  Paul、Chelsea</div>
-					<div>五  Andy、Ts</div>
-					<div>六  Kitty、Jason</div>
-					<div>七  Chris、Bob</div>
-				</div>
+				<el-button round size="medium" type="primary" style="width: 30%;" @click="send">確定</el-button>
 			</el-dialog>
 		</div>
 
-		<el-card class="box-card" style="width: 500px;"  body-style="padding-top: 0px;" shadow="always">
+	<!--	<el-card class="box-card" style="width: 500px;"  body-style="padding-top: 0px;" shadow="always">
 		  <div slot="header" class="cardClearfix">
 		    <p>公布栏</p>
 				<el-radio-group v-model="channel">
@@ -61,8 +49,8 @@
 					<el-button slot="append" icon="el-icon-edit" size="mini" @click="add" style="margin: 10px 0 5px 10px;"></el-button>
 				</div>
 				
-		    <!-- <el-button style="float: right; padding: 3px 0" type="text">新增公告</el-button>
-				 -->
+		    <el-button style="float: right; padding: 3px 0" type="text">新增公告</el-button>
+				
 		  </div>
 		  <div class="text item">
 				<div v-for="(annList, annId) in announcement" :id="'channel.' + annId">
@@ -75,7 +63,7 @@
 					</div>
 				</div>
 		  </div>
-		</el-card>
+		</el-card>-->
 	</div class="wrapper">
 </template>
 
@@ -89,7 +77,6 @@ export default {
 			checkType: '',
 			selfCheck: [],
 			dialogVisible: false,
-			dialogVisible2: false,
 			confirmVisible: false,
 			addInput: '',
 			announcement: [],
@@ -99,20 +86,20 @@ export default {
 	},
 	mounted() {
 		this.todayCheck()
-		this.getAnnouncement()
+		// this.getAnnouncement()
 		let jwt_token = localStorage.getItem('token')
-		Echo.connector.options.auth.headers['Authorization'] = 'Bearer ' + jwt_token
-    Echo.options.auth = {
-        headers: {
-            Authorization: 'Bearer ' + jwt_token,
-        },
-    },
-		Echo.channel(`publicAnnouncement`)
-    .listen('PodcastAnnouncement', (e) => {
-			console.log(e);
-			this.updateAnnouncement(e)
-			// this.contents.push(`${e.account}: $2{e.content}`)
-		})
+		// Echo.connector.options.auth.headers['Authorization'] = 'Bearer ' + jwt_token
+  //   Echo.options.auth = {
+  //       headers: {
+  //           Authorization: 'Bearer ' + jwt_token,
+  //       },
+  //   },
+		// Echo.channel(`publicAnnouncement`)
+  //   .listen('PodcastAnnouncement', (e) => {
+		// 	console.log(e);
+		// 	this.updateAnnouncement(e)
+		// 	// this.contents.push(`${e.account}: $2{e.content}`)
+		// })
 		
 		// Echo.channel(`Group.it`)
     // .listen('PrivateAnnouncement', (e) => {
@@ -124,15 +111,18 @@ export default {
 	methods: {
 		type(s) {
 			this.checkType = s
-			this.info = (s === '1') ? '签到' : '簽退'
+			this.info = (s === '1') ? '簽到' : '簽退'
 			this.image = (s === '1') ? 'images/checkin.jpg' : 'images/checkout.jpg'
 			this.confirmVisible = true
 		},
 		send() {
+			//拿內網ip
 			this.getUserIP((ip) => {
+				/////////////////////////demo先暫時拿掉此功能
+				ip = ''
 				console.log(ip, 'ip');
 				if (ip === 'stop') {
-					this.$message.error('请先更改Chrome设定')
+					this.$message.error('請先更改Chrome設定')
 					return
 				}
 				axios.post('/api/checkIn', { type: this.checkType, ip: ip })
@@ -161,7 +151,7 @@ export default {
 			axios.get('/api/todayCheck')
 				.then(res => {
 					if (res.data.data.length === 0) {
-						this.noCheck = '今日都已签到完毕！'
+						this.noCheck = '今日都已簽到完畢！'
 					}
 					this.noCheck = res.data.data.all
 					this.selfCheck = res.data.data.self
@@ -247,12 +237,12 @@ export default {
 		// },
 		'$store.state.group' (val) {
 			console.log(val);
-			Echo.channel(`Group.${val}`)
-    	.listen('PrivateAnnouncement', (e) => {
-				console.log(e);
-				this.updateAnnouncement(e)
-				// this.contents.push(`${this.$store.state.groupName}-${e.account}: ${e.content}`)
-			});
+			// Echo.channel(`Group.${val}`)
+   //  	.listen('PrivateAnnouncement', (e) => {
+			// 	console.log(e);
+			// 	this.updateAnnouncement(e)
+			// 	// this.contents.push(`${this.$store.state.groupName}-${e.account}: ${e.content}`)
+			// });
 		},
 	}
 };
@@ -266,7 +256,7 @@ export default {
   text-align: center;
   height: 580px;
   align-items: flex-start;
-	width: 90%;
+  width: 80%;
   margin: 50px 0px 0px 240px;
 }
 

@@ -15,18 +15,18 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('publicAnnouncement', function ($user, $id) {
-    return true;
-});
+// Broadcast::channel('publicAnnouncement', function ($user, $id) {
+//     return true;
+// });
 
-Broadcast::channel('Group.*', function ($user, $id) {
-    // return $user->id === account::findOrFail($id)->accountid;
-    return true;
-});
+// Broadcast::channel('Group.*', function ($user, $id) {
+//     // return $user->id === account::findOrFail($id)->accountid;
+//     return true;
+// });
 
-Broadcast::channel('Group.it', function ($user, $id) {
-    // return $user->id === account::findOrFail($id)->accountid;
-    return [
-        'id' => $id,
-    ];
-});
+// Broadcast::channel('Group.it', function ($user, $id) {
+//     // return $user->id === account::findOrFail($id)->accountid;
+//     return [
+//         'id' => $id,
+//     ];
+// });

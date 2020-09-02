@@ -1,28 +1,28 @@
 <template>
   <el-main class="main">
     <center>
-      <div class="" style="margin-top: 4%; margin-left: 4%;">
+      <div class="" style="margin-top: 3%; margin-left: 4%;">
         <el-date-picker
           v-model="date"
           type="month"
-          placeholder="选择日期"
+          placeholder="選擇日期"
           value-format="yyyy-MM"
           @change="">
         </el-date-picker>
       </div>
-      <div style="margin-top: 10px; margin-left: 4%;">
+      <div style="margin-top: 16px; margin-left: 4%;">
 <!--         <el-button @click="change('all', false)" style="font-family: Microsoft JhengHei; font-size: 18px; color: #FFF; background-color: #4489ca; border-radius: 10px; width: 150px; ">取消所有標記</el-button> -->
-        <el-button @click="exportReport" style="font-family: Microsoft JhengHei; font-size: 18px; color: #FFF; background-color: #4489ca; border-radius: 10px; width: 150px; " download>汇出Excel</el-button>
+        <el-button @click="exportReport" style="font-family: Microsoft JhengHei; font-size: 18px; color: #FFF; background-color: #4489ca; border-radius: 10px; width: 150px; " download>匯出Excel</el-button>
       </div>
     </center>
-    <span class="item" v-loading="loading">
+    <span class="item" v-loading="loading" element-loading-background="transparent">
       <el-card v-for="(val, key) in member" :key='key' class="box-card">
         <div slot="header" class="clearfix" style="text-align: center">
           <span>{{ key }}</span>
         </div>
-        <div  v-for="(v, k) in val" style="text-align: center">
+        <div v-for="(v, k) in val" style="text-align: center">
           <!-- <el-checkbox v-model="v.check" @change="change(k, v.check)"> -->
-            <el-button class="text" type="text" @click="chooseMember(k), dialogTableVisible = true">{{ v.name }}</el-button>
+          <el-button class="text" type="text" @click="chooseMember(k), dialogTableVisible = true">{{ v.name }}</el-button>
           <!-- </el-checkbox> -->
         </div>
       </el-card>
@@ -40,27 +40,27 @@
             <span style="margin-left: 5px">{{ scope.row.endtime }}</span>
           </template>
         </el-table-column>
-        <el-table-column property="late1" label="迟到时数" width="120">
+        <el-table-column property="late1" label="遲到時數" width="120">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.late1 }}</span>
           </template>
         </el-table-column>
-        <el-table-column property="late2" label="早退时数" width="120">
+        <el-table-column property="late2" label="早退時數" width="120">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.late2 }}</span>
           </template>
         </el-table-column>
-        <el-table-column property="total" label="实际工时" width="120">
+        <el-table-column property="total" label="實際工時" width="120">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.total }}</span>
           </template>
         </el-table-column>
-        <el-table-column property="remark1" label="上班备注" width="140">
+        <el-table-column property="remark1" label="上班備註" width="140">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.remark1 }}</span>
           </template>
         </el-table-column>
-        <el-table-column property="remark2" label="下班备注" width="140">
+        <el-table-column property="remark2" label="下班備註" width="140">
           <template slot-scope="scope">
             <span style="margin-left: 5px">{{ scope.row.remark2 }}</span>
           </template>
@@ -87,6 +87,7 @@
       }
     },
     mounted() {
+      this.loading = true
       this.getMember()
       this.getRecord()
     },
@@ -181,12 +182,12 @@
           var a = document.createElement("a");
           document.body.appendChild(a);
           a.href = url;
-          a.download = `${this.date}月人事报表.xlsx`;
+          a.download = `${this.date}月人事報表.xlsx`;
           a.click();
           window.URL.revokeObjectURL(url);
         })
         .catch(err => {
-          console.log(`接口调用失败`);
+          console.log(`接口調用失敗`);
           console.log(err);
         })
       }

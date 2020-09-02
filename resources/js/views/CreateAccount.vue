@@ -2,38 +2,38 @@
 	<center>
 		<el-card class="box-card" style="margin-top: 100px; padding: 20px;">
 			<el-form ref="form" :model="form" label-width="60px" size="small">
-				<el-form-item label="帐号">
+				<el-form-item label="帳號">
 					<el-input v-model="form.account"></el-input>
 				</el-form-item>
-				<el-form-item label="名称">
+				<el-form-item label="名稱">
 					<el-input v-model="form.name"></el-input>
 				</el-form-item>
-				<el-form-item label="密码">
+				<el-form-item label="密碼">
 					<el-input v-model="form.password" show-password></el-input>
 				</el-form-item>
-				<el-form-item label="确认密码">
+				<el-form-item label="確認密碼">
 					<el-input v-model="form.confirm" show-password></el-input>
 				</el-form-item>
-				<el-form-item label="层级">
-					<el-select v-model="form.insert_level" placeholder="选择会员层级">
+				<el-form-item label="層級">
+					<el-select v-model="form.insert_level" placeholder="請選擇會員層級">
 						<el-option label="普通" value="0"></el-option>
 						<el-option label="管理" value="1"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="部门">
-					<el-select v-model="form.insert_group" placeholder="选择部门">
+				<el-form-item label="部門">
+					<el-select v-model="form.insert_group" placeholder="選擇部門">
 						<el-option label="IT" value="IT"></el-option>
 						<el-option label="CS" value="CS"></el-option>
 						<el-option label="TS" value="TS"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="班别">
-					<el-select v-model="form.insert_shift" placeholder="选择班别">
+					<el-select v-model="form.insert_shift" placeholder="選擇班别">
 						<el-option v-for="(val, key) in select_shift" :key="key" :label="val.title" :value="val.id"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
-					<el-button type="primary" @click="onSubmit" style="margin-top: 20px;">立即创建</el-button>
+					<el-button type="primary" @click="onSubmit" style="margin-top: 20px;">立即創建</el-button>
 				</el-form-item>
 			</el-form>
 		</el-card>
@@ -62,12 +62,12 @@ export default {
 	methods: {
 		onSubmit() {
 			if (this.form.password !== this.form.confirm) {
-				this.$message.error('密码确认不相符')
+				this.$message.error('密碼確認不相符')
 				return false
 			}
 			axios.post('/api/register', this.form)
 				.then(res => {
-					this.$message.success('创建成功')
+					this.$message.success('創建成功')
 					this.form.account = ''
 					this.form.password = ''
 					this.form.confirm = ''

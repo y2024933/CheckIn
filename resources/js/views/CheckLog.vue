@@ -1,6 +1,6 @@
 <template>
   <el-main style="display: flex; justify-content: center; overflow: inherit;">
-    <el-calendar :first-day-of-week=7>
+    <el-calendar :first-day-of-week=7 v-loading="loading" element-loading-background="transparent">
       <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
       <template
         slot="dateCell"
@@ -22,6 +22,7 @@
     data() {
       return {
         record: {},
+        loading: true,
         today: '',
         late: {},
         shift: {},
@@ -31,6 +32,9 @@
     mounted() {
       this.time()
       this.getRecord()
+      //簡體改繁體
+      document.getElementsByClassName('el-button--plain')[0].innerText = '上個月'
+      document.getElementsByClassName('el-button--plain')[2].innerText = '下個月'
     },
     methods: {
       getRecord() {
@@ -40,7 +44,8 @@
         })
         axios.post('/api/getRecordLog', { date: this.date })
         .then((res) => {
-          this.record = res.data.data;
+          this.record = res.data.data
+          this.loading = false
         })
       },
       time() {

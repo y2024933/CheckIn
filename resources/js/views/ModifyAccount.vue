@@ -3,7 +3,7 @@
     <center>
       <el-button style="margin-top: 30px; font-weight:bold; border-radius: 12px; background-color: #4489ca; color: #FFF;" @click="dialogTableVisible2=true">
         <i class="el-icon-plus" style="font-weight:bold; font-size: x-large;"></i>
-        <span style="font-size: 21px; float: right;">创建帐号</span>
+        <span style="font-size: 21px; float: right;">創建帳號</span>
       </el-button>
     	<el-table
     	  v-loading="loading"
@@ -19,23 +19,23 @@
     	    </template>
     	  </el-table-column>
     	  <el-table-column
-    	    label="员工编码"
+    	    label="員工編碼"
     	    width="180">
     	    <template slot-scope="scope">
     	      <span style="margin-left: 5px">{{ scope.row.nickname }}</span>
     	    </template>
     	  </el-table-column>
     	  <el-table-column
-    	    label="权限"
+    	    label="權限"
     	    width="140"
-          :filters="[{ text: '超级管理员', value: 2 }, { text: '管理', value: 1 }, { text: '普通', value: 0 }]"
+          :filters="[{ text: '管理員', value: 2 }, { text: '主管', value: 1 }, { text: '普通', value: 0 }]"
           :filter-method="filterLevel">
     	    <template slot-scope="scope">
-    	      <span style="margin-left: 5px">{{ (scope.row.level == '2') ? '超级管理员' : (scope.row.level == '1') ? '管理' : '普通' }}</span>
+    	      <span style="margin-left: 5px">{{ (scope.row.level == '2') ? '管理員' : (scope.row.level == '1') ? '主管' : '普通' }}</span>
     	    </template>
     	  </el-table-column>
     	  <el-table-column
-          label="部门"
+          label="部門"
           width="140"
           :filters="filter_group"
           :filter-method="filterGroup">
@@ -44,7 +44,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          label="组别"
+          label="組別"
           width="140"
           :filters="filter_class"
           :filter-method="filterClass">
@@ -53,7 +53,7 @@
           </template>
           </el-table-column>
     	  <el-table-column
-    	    label="班别"
+    	    label="班別"
     	    width="140"
           :filters="filter_shift"
           :filter-method="filterShift">
@@ -67,7 +67,7 @@
     	        size="mini"
     	        type="warning"
     	        @click="handleEdit(scope.$index, scope.row), dialogTableVisible=true"
-              style="margin-right: 18px;">编辑</el-button>
+              style="margin-right: 18px;">編輯</el-button>
     	      <el-button
     	        size="mini"
     	        type="warning"
@@ -81,32 +81,32 @@
       <center>
         <el-form ref="form" :model="form" label-width="" size="small">
           <el-form-item label="">
-            <span>员工编码</span>
+            <span>員工編碼</span>
             <el-input v-model="form.nickname"></el-input>
           </el-form-item>
           <el-form-item label="">
-            <span>权限</span>
-            <el-select v-model="form.editLevel" placeholder="请选择">
-              <el-option value='2' label='超级管理员' :disabled="$store.state.level != 2"></el-option>
-              <el-option value='1' label='管理'></el-option>
+            <span>權限</span>
+            <el-select v-model="form.editLevel" placeholder="請選擇">
+              <el-option value='2' label='管理員' :disabled="$store.state.level != 2"></el-option>
+              <el-option value='1' label='主管'></el-option>
               <el-option value='0' label='普通'></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="">
-            <span>部门</span>
-            <el-select v-model="form.editGroup" placeholder="请选择">
+            <span>部門</span>
+            <el-select v-model="form.editGroup" placeholder="請選擇">
               <el-option v-for="(val, key) in group_setting" :key="key" :label="val" :value="key"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="">
-            <span>组别</span>
-            <el-select v-model="form.editClass" placeholder="请选择">
+            <span>組別</span>
+            <el-select v-model="form.editClass" placeholder="請選擇">
               <el-option v-for="(val, key) in class_setting" :key="key" :label="val" :value="key"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="">
-            <span>班别</span>
-            <el-select v-model="form.editShift" placeholder="请选择">
+            <span>班別</span>
+            <el-select v-model="form.editShift" placeholder="請選擇">
               <el-option v-for="(shift, key) in allShift" :key="key" :label="shift" :value="key"></el-option>
             </el-select>
           </el-form-item>
@@ -119,7 +119,7 @@
       <center>
         <el-form ref="form" :model="form" label-width="" size="small" style="">
           <el-form-item label="">
-            <span>帐号</span>
+            <span>帳號</span>
             <el-input v-model="form2.account"></el-input>
           </el-form-item>
 <!--           <el-form-item label="">
@@ -127,39 +127,39 @@
             <el-input v-model="form2.name"></el-input>
           </el-form-item> -->
           <el-form-item label="">
-            <span>密码</span>
+            <span>密碼</span>
             <el-input v-model="form2.password" show-password></el-input>
           </el-form-item>
           <el-form-item label="">
-            <span>确认密码</span>
+            <span>確認密碼</span>
             <el-input v-model="form2.confirm" show-password></el-input>
           </el-form-item>
           <el-form-item label="">
-            <span>层级</span>
-            <el-select v-model="form2.insert_level" placeholder="选择会员层级">
+            <span>層級</span>
+            <el-select v-model="form2.insert_level" placeholder="選擇層級">
               <el-option label="普通" value="0"></el-option>
-              <el-option label="管理" value="1"></el-option>
+              <el-option label="主管" value="1"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="">
-            <span>部门</span>
-            <el-select v-model="form2.insert_group" placeholder="选择部门">
+            <span>部門</span>
+            <el-select v-model="form2.insert_group" placeholder="選擇部門">
               <el-option v-for="(val, key) in group_setting" :key="key" :label="val" :value="key"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="">
-            <span>组别</span>
-            <el-select v-model="form2.insert_class" placeholder="选择部门">
+            <span>組別</span>
+            <el-select v-model="form2.insert_class" placeholder="選擇部門">
               <el-option v-for="(val, key) in class_setting" :key="key" :label="val" :value="key"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="">
-            <span>班别</span>
-            <el-select v-model="form2.insert_shift" placeholder="选择班别">
+            <span>班別</span>
+            <el-select v-model="form2.insert_shift" placeholder="選擇班別">
               <el-option v-for="(val, key) in select_shift" :key="key" :label="val.title" :value="val.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-button @click="onSubmit" style="font-family: Microsoft JhengHei;margin-top: 10px; font-size: 18px; color: #FFF; background-color: #4489ca; border-radius: 10px; width: 120px;">立即创建</el-button>
+          <el-button @click="onSubmit" style="font-family: Microsoft JhengHei;margin-top: 10px; font-size: 18px; color: #FFF; background-color: #4489ca; border-radius: 10px; width: 120px;">立即創建</el-button>
         </el-form>
       </center>
     </el-dialog>
@@ -236,8 +236,8 @@
         this.form.editShift = String(row.shift)
     	},
     	handleDel(index, row) {
-    	  this.$confirm(`是否删除 ${row.accountcode} ?`, '提示', {
-    	    confirmButtonText: '确定',
+    	  this.$confirm(`是否刪除 ${row.accountcode} ?`, '提示', {
+    	    confirmButtonText: '確定',
     	    cancelButtonText: '取消',
     	    type: 'warning'
     	  }).then(() => {
@@ -286,12 +286,12 @@
       },
       onSubmit() {
         if (this.form2.password !== this.form2.confirm) {
-          this.$message.error('密码确认不相符')
+          this.$message.error('密碼確認不相符')
           return false
         }
         axios.post('/api/register', this.form2)
           .then(res => {
-            this.$message.success('创建成功')
+            this.$message.success('創建成功')
             this.resetForm2()
             this.getAccount()
           })

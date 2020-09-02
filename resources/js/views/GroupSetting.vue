@@ -1,10 +1,10 @@
 <template>
   <center>
     <el-button @click="dialogTableVisible5=true" style="margin-top: 2%; font-weight:bold; border-radius: 12px; background-color: #4489ca; color: #FFF;">
-      <span style="font-size: 21px; float: right;">新增部门</span>
+      <span style="font-size: 21px; float: right;">新增部門</span>
     </el-button>
     <el-button @click="dialogTableVisible2=true" style="margin-top: 2%; font-weight:bold; border-radius: 12px; background-color: #4489ca; color: #FFF;">
-      <span style="font-size: 21px; float: right;">组别管理</span>
+      <span style="font-size: 21px; float: right;">組別管理</span>
     </el-button>
     <el-table
       v-loading="loading"
@@ -12,12 +12,12 @@
       size="mini"
       style="width: 50vh; margin-top: 2%; padding: 15px 30px 30px 30px; font-size: 18px; color: #b6b6b6;">
       <el-table-column
-        label="部门"
+        label="部門"
         width="120"
         prop="title">
       </el-table-column>
       <el-table-column
-        label="组别"
+        label="組別"
         width="160"
         prop="class_ch">
       </el-table-column>
@@ -27,7 +27,7 @@
             size="mini"
             type="warning"
             @click="handleEdit(scope.$index, scope.row, 'group'), dialogTableVisible1=true"
-            style="margin-right: 18px;">编辑</el-button>
+            style="margin-right: 18px;">編輯</el-button>
           <el-button
             size="mini"
             type="warning"
@@ -36,18 +36,18 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog title="部门" :visible.sync="dialogTableVisible1" center @close="resetForm2" style="margin-top: 12vh;">
+    <el-dialog title="部門" :visible.sync="dialogTableVisible1" center @close="resetForm2" style="margin-top: 12vh;">
       <el-form ref="form" :model="form1" label-width="" label-position="left">
         <el-form-item label="">
-          <span style="font-size: 18px;">部门名称</span>
+          <span style="font-size: 18px;">部門名稱</span>
           <el-input v-model="form1.group_title" style="width: 260px;"></el-input>
         </el-form-item>
       </el-form>
-      <el-button @click="updateGroup()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">确定</el-button>
+      <el-button @click="updateGroup()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">確定</el-button>
     </el-dialog>
 
     <el-dialog title="" :visible.sync="dialogTableVisible2" center @close="resetForm2" style="margin-top: 5vh;">
-      <span class="select">部门</span>
+      <span class="select">部門</span>
       <el-select v-model="selectGroup" style="margin-right: 28px;">
         <el-option
           v-for="v in selectData2"
@@ -56,7 +56,7 @@
           :value="v.id">
         </el-option>
       </el-select>
-      <el-button @click="dialogTableVisible3=true" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">新增组别</el-button>
+      <el-button @click="dialogTableVisible3=true" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">新增組別</el-button>
       <center>
         <el-table
           v-loading="loading"
@@ -64,12 +64,12 @@
           size="mini"
           style="width: 48vh; margin-top: 2%; padding: 15px 30px 0px 30px; font-size: 18px; color: #b6b6b6;">
           <el-table-column
-            label="组别名稱"
+            label="組別名稱"
             width="140"
             prop="title">
           </el-table-column>
           <el-table-column
-            label="所属部门"
+            label="所屬部門"
             width="140"
             prop="groupName">
           </el-table-column>
@@ -79,7 +79,7 @@
                 size="mini"
                 type="warning"
                 @click="handleEdit(scope.$index, scope.row, 'class'), dialogTableVisible4=true"
-                style="margin-right: 18px;">编辑</el-button>
+                style="margin-right: 18px;">編輯</el-button>
               <el-button
                 size="mini"
                 type="warning"
@@ -93,11 +93,11 @@
     <el-dialog title="" :visible.sync="dialogTableVisible3" center @close="resetForm2" style="margin-top: 11vh;">
       <el-form ref="form" :model="form2" label-width="" label-position="left">
         <el-form-item label="">
-          <span style="font-size: 18px;">组别名称</span>
+          <span style="font-size: 18px;">組別名稱</span>
           <el-input v-model="form2.class_title" style="width: 260px;"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <span style="font-size: 18px;">部门</span>
+          <span style="font-size: 18px;">部門</span>
           <el-select v-model="form2.class_group" placeholder="">
             <el-option
               v-for="v in selectData1"
@@ -111,14 +111,14 @@
       <el-button @click="insertClass()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">新增</el-button>
     </el-dialog>
 
-    <el-dialog title="组别" :visible.sync="dialogTableVisible4" center @close="resetForm2" style="margin-top: 11vh;">
+    <el-dialog title="組別" :visible.sync="dialogTableVisible4" center @close="resetForm2" style="margin-top: 11vh;">
       <el-form ref="form" :model="form2" label-width="" label-position="left">
         <el-form-item label="">
-          <span style="font-size: 18px;">组别名称</span>
+          <span style="font-size: 18px;">組別名稱</span>
           <el-input v-model="form2.class_title" style="width: 260px;"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <span style="font-size: 18px;">部门</span>
+          <span style="font-size: 18px;">部門</span>
           <el-select v-model="form2.class_group" placeholder="">
             <el-option
               v-for="v in selectData1"
@@ -129,17 +129,17 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <el-button @click="updateClass()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">确定</el-button>
+      <el-button @click="updateClass()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">確定</el-button>
     </el-dialog>
 
-    <el-dialog title="部门" :visible.sync="dialogTableVisible5" center @close="resetForm2" style="margin-top: 12vh;">
+    <el-dialog title="部門" :visible.sync="dialogTableVisible5" center @close="resetForm2" style="margin-top: 12vh;">
       <el-form ref="form" :model="form1" label-width="" label-position="left">
         <el-form-item label="">
-          <span style="font-size: 18px;">部门名称</span>
+          <span style="font-size: 18px;">部門名稱</span>
           <el-input v-model="form1.group_title" style="width: 260px;"></el-input>
         </el-form-item>
       </el-form>
-      <el-button @click="insertGroup()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">确定</el-button>
+      <el-button @click="insertGroup()" style="font-weight: bold; font-size: 16px; border-radius: 12px; background-color: #4489ca; color: #FFF;">確定</el-button>
     </el-dialog>
   </center>
 </template>
@@ -182,7 +182,7 @@
         axios.get('api/getGroup')
         .then((res) => {
           this.tableData1 = res.data.data
-          this.selectData1 = [{id: 0, title: '请选择部门'}].concat(res.data.data)
+          this.selectData1 = [{id: 0, title: '請選擇部門'}].concat(res.data.data)
           this.selectData2 = [{id: 0, title: '全部'}].concat(res.data.data)
           this.loading = false
         })
@@ -199,7 +199,7 @@
         if(this.form1.group_title.length <= 0) {
           this.$message({
             type: 'error',
-            message: '请填写部门名称'
+            message: '請填寫部門名稱'
           });
         } else {
           axios.post('api/insertGroup', this.form1)
@@ -220,7 +220,7 @@
         if(this.form1.group_title.length <= 0) {
           this.$message({
             type: 'error',
-            message: '请填写部门名称'
+            message: '請填寫部門名稱'
           });
         } else {
           axios.post('api/updateGroup', this.form1)
@@ -241,7 +241,7 @@
         if(this.form2.class_group == 0) {
           this.$message({
             type: 'error',
-            message: '请选择部门'
+            message: '請選擇部門'
           });
         } else {
           axios.post('api/insertClass', this.form2)
@@ -285,14 +285,14 @@
       handleDel(index, row, type){
         var api = ''
         if(type == 'class') {
-          //删组别
+          //删組別
           api = 'api/delClass'
         } else {
-          //删部门
+          //删部門
           api = 'api/delGroup'
         }
-        this.$confirm(`是否删除 ${row.title} ?`, '提示', {
-          confirmButtonText: '确定',
+        this.$confirm(`是否刪除 ${row.title} ?`, '提示', {
+          confirmButtonText: '確定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {

@@ -1,5 +1,5 @@
 window._ = require('lodash');
-window.io = require('socket.io-client');
+// window.io = require('socket.io-client');
 import Echo from 'laravel-echo'
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -19,19 +19,19 @@ window.axios.interceptors.request.use((config) => {
 })
 // let token = document.head.querySelector('meta[name="token"]');
 // console.log(token, 222);
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-	host: window.location.hostname + ':6001',
-	// reconnectionAttempts: 5,
-    // csrfToken: token.content,
-	encrypted: true,
-	auth: {
-        headers:
-        {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    }
-});
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+// 	host: window.location.hostname + ':6001',
+// 	// reconnectionAttempts: 5,
+//     // csrfToken: token.content,
+// 	encrypted: true,
+// 	auth: {
+//         headers:
+//         {
+//             Authorization: `Bearer ${localStorage.getItem('token')}`
+//         }
+//     }
+// });
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
